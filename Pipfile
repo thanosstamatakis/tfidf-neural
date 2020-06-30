@@ -12,6 +12,7 @@ pandas = "*"
 nltk = "*"
 keras = "*"
 tensorflow = "*"
+plaidml-keras = "*"
 
 [requires]
 python_version = "3.6"
