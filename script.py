@@ -21,20 +21,20 @@ from nltk.stem import PorterStemmer
 
 
 def nltk_preprocess(text):
-    text2 = " ".join(
+    removed_punct = " ".join(
         "".join([" " if ch in string.punctuation else ch for ch in text]).split())
     tokens = [word for sent in nltk.sent_tokenize(
-        text2) for word in nltk.word_tokenize(sent)]
+        removed_punct) for word in nltk.word_tokenize(sent)]
     tokens = [word.lower() for word in tokens]
-    stopwds = stopwords.words('english')
-    tokens = [token for token in tokens if token not in stopwds]
+    english_stopwords = stopwords.words('english')
+    tokens = [token for token in tokens if token not in english_stopwords]
     tokens = [word for word in tokens if len(word) >= 3]
     stemmer = PorterStemmer()
     tokens = [stemmer.stem(word) for word in tokens]
     tagged_corpus = pos_tag(tokens)
-    pre_proc_text = " ".join([nltk_lematize(token, tag)
+    sanitized = " ".join([nltk_lematize(token, tag)
                               for token, tag in tagged_corpus])
-    return pre_proc_text
+    return sanitized
 
 
 def nltk_lematize(token, tag):
